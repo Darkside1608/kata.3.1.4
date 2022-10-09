@@ -19,9 +19,4 @@ public class LoginController {
     return "userPage";
   }
 
-  @PreAuthorize("authentication.getPrincipal().getAge() >= 18")
-  @GetMapping("/user/onlyAdult")
-  public String getPageOver18() {
-    return "onlyAdultUserPage";
-  }
 }
