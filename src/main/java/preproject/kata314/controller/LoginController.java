@@ -10,12 +10,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class LoginController {
 
   @GetMapping("/admin")
-  public String adminPage() {
+  public String getAdminPage() {
     return "adminPage";
   }
-
   @GetMapping("/user")
-  public  String userPage() {
+  public  String getUserPage() {
     return "userPage";
   }
 

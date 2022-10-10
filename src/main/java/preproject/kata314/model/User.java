@@ -2,6 +2,7 @@ package preproject.kata314.model;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -141,6 +142,26 @@ public class User implements UserDetails {
 
   public void setRoles(Set<Role> roleSet) {
     this.roles = roleSet;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    User user = (User) o;
+    return id == user.id && age == user.age && Objects.equals(email, user.email)
+        && Objects.equals(password, user.password) && Objects.equals(firstName,
+        user.firstName) && Objects.equals(lastName, user.lastName)
+        && Objects.equals(roles, user.roles);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, email, password, age, firstName, lastName, roles);
   }
 
   @Override
