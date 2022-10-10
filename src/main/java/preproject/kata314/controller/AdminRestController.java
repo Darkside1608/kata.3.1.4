@@ -16,13 +16,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 import preproject.kata314.model.Role;
 import preproject.kata314.model.User;
 import preproject.kata314.service.RoleService;
 import preproject.kata314.service.UserService;
 
 @RestController
-@RequestMapping("/api")
 public class AdminRestController {
 
   private final UserService userService;
@@ -33,16 +33,22 @@ public class AdminRestController {
     this.userService = userService;
     this.roleService = roleService;
   }
-
   @GetMapping("/admin")
+  public ModelAndView getMainPage() {
+    return new ModelAndView("adminPage");
+  }
+  @GetMapping("api/admin")
   public ResponseEntity<List<User>> getAllUsers() {
     final List<User> users = userService.getAllUsers();
+
     return users != null && !users.isEmpty()
         ? new ResponseEntity<>(users, HttpStatus.OK)
         : new ResponseEntity<>(HttpStatus.NOT_FOUND);
   }
 
-  @GetMapping("/admin/{id}")
+
+
+  @GetMapping("api/admin/{id}")
   public ResponseEntity<User> getUser(@PathVariable("id") long id) {
     final User user = userService.getUser(id);
     return user != null
@@ -50,25 +56,25 @@ public class AdminRestController {
         : new ResponseEntity<>(HttpStatus.NOT_FOUND);
   }
 
-  @PostMapping("/admin")
+  @PostMapping("api/admin")
   public ResponseEntity<User> newUser(@RequestBody User user) {
     userService.saveUser(user);
     return new ResponseEntity<>(HttpStatus.CREATED);
   }
 
-  @PatchMapping("/admin/{id}")
+  @PatchMapping("api/admin/{id}")
   public ResponseEntity<User> updateUser(@RequestBody User user) {
     userService.updateUser(user);
     return new ResponseEntity<>(HttpStatus.OK);
   }
 
-  @DeleteMapping("/admin/{id}")
+  @DeleteMapping("api/admin/{id}")
   public ResponseEntity<User> deleteUser(@PathVariable("id") long id) {
     userService.deleteUser(id);
     return new ResponseEntity<>(HttpStatus.OK);
   }
 
-  @GetMapping("/roles")
+  @GetMapping("api/roles")
   public ResponseEntity<List<Role>> getAllRoles() {
     return new ResponseEntity<>(roleService.getRoles(), HttpStatus.OK);
   }
