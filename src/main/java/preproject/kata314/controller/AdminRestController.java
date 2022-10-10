@@ -4,17 +4,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import preproject.kata314.model.Role;
@@ -33,26 +28,25 @@ public class AdminRestController {
     this.userService = userService;
     this.roleService = roleService;
   }
+
   @GetMapping("/admin")
   public ModelAndView getAdminPage() {
     return new ModelAndView("adminPage");
   }
+
   @GetMapping("api/admin")
   public ResponseEntity<List<User>> getAllUsers() {
     final List<User> users = userService.getAllUsers();
 
-    return users != null && !users.isEmpty()
-        ? new ResponseEntity<>(users, HttpStatus.OK)
+    return users != null && !users.isEmpty() ? new ResponseEntity<>(users, HttpStatus.OK)
         : new ResponseEntity<>(HttpStatus.NOT_FOUND);
   }
-
 
 
   @GetMapping("api/admin/{id}")
   public ResponseEntity<User> getUser(@PathVariable("id") long id) {
     final User user = userService.getUser(id);
-    return user != null
-        ? new ResponseEntity<>(user, HttpStatus.OK)
+    return user != null ? new ResponseEntity<>(user, HttpStatus.OK)
         : new ResponseEntity<>(HttpStatus.NOT_FOUND);
   }
 

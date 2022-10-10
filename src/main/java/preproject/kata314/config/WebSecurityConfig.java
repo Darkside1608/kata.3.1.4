@@ -17,7 +17,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   private final UserDetailsService userDetailsService;
   private final SuccessUserHandler successUserHandler;
 
-  public WebSecurityConfig(UserDetailsService userDetailsService, SuccessUserHandler successUserHandler) {
+  public WebSecurityConfig(UserDetailsService userDetailsService,
+      SuccessUserHandler successUserHandler) {
     this.userDetailsService = userDetailsService;
     this.successUserHandler = successUserHandler;
   }
@@ -26,26 +27,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   public void configure(AuthenticationManagerBuilder auth) throws Exception {
     auth.userDetailsService(userDetailsService);
   }
+
   @Override
   protected void configure(HttpSecurity http) throws Exception {
-    http
-        .csrf().disable()
-        .authorizeRequests()
-        .antMatchers( "/login/**","/loginPage.js", "/registration").permitAll()
-        .antMatchers("/admin/**").hasRole("ADMIN")
-        .antMatchers("/user/**").hasAnyRole("USER", "ADMIN")
-        .anyRequest().authenticated()
-        .and()
-        .httpBasic()
-        .and()
-        .formLogin()
-        .loginPage("/login")
-        .usernameParameter("email_address")
-        .passwordParameter("password")
-        .successHandler(successUserHandler)
-        .permitAll()
-        .and()
-        .logout()
+    http.csrf().disable().authorizeRequests()
+        .antMatchers("/login/**", "/loginPage.js", "/registration").permitAll()
+        .antMatchers("/admin/**").hasRole("ADMIN").antMatchers("/user/**")
+        .hasAnyRole("USER", "ADMIN").anyRequest().authenticated().and().httpBasic().and()
+        .formLogin().loginPage("/login").usernameParameter("email_address")
+        .passwordParameter("password").successHandler(successUserHandler).permitAll().and().logout()
         .permitAll();
   }
 

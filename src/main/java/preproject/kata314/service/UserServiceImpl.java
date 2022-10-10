@@ -19,17 +19,17 @@ public class UserServiceImpl implements UserService {
     this.passwordEncoder = passwordEncoder;
   }
 
-
+  @Override
   public List<User> getAllUsers() {
     return userDAO.findAll();
   }
 
-
+  @Override
   public User getUser(long id) {
     return userDAO.findById(id).orElse(null);
   }
 
-
+  @Override
   public User getUserByUsername(String username) {
     return userDAO.findUserByEmail(username);
   }
