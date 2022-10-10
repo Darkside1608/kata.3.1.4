@@ -34,7 +34,7 @@ public class AdminRestController {
     this.roleService = roleService;
   }
   @GetMapping("/admin")
-  public ModelAndView getMainPage() {
+  public ModelAndView getAdminPage() {
     return new ModelAndView("adminPage");
   }
   @GetMapping("api/admin")

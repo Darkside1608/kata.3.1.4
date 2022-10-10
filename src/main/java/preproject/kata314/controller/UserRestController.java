@@ -13,7 +13,7 @@ import preproject.kata314.model.User;
 
 public class UserRestController {
   @GetMapping("/user")
-  public ModelAndView getMainPage() {
+  public ModelAndView getUserPage() {
     return new ModelAndView("userPage");
   }
 
